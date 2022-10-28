@@ -1,13 +1,4 @@
 // Custom.scss
-// Option A: Include all of Bootstrap
-
-// Include any default variable overrides here (though functions won't be available)
-
-@import "~bootstrap/scss/bootstrap";
-
-// Then add additional custom code here
-
-// Custom.scss
 // Option B: Include parts of Bootstrap
 
 // 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
@@ -24,3 +15,6 @@
 @import "~bootstrap/scss/maps";
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/root";
+
+// 這行要放在最後
+@import "~bootstrap/scss/bootstrap";
