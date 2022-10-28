@@ -52,6 +52,9 @@ export default {
       const api = `${process.env.VUE_APP_API}admin/signin`
       console.log(api)
       this.axios.post(api, this.user).then(res => {
+        const { token, expired } = res.data
+        // console.log(token, expired)
+        document.cookie = `hexToken=${token}; expires=${new Date(expired)}`
         console.log(res)
       })
     }
