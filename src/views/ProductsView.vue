@@ -64,6 +64,14 @@ export default {
           this.pagination = res.data.pagination
         }
       })
+    },
+    updateProduct (item) {
+      this.tempProduct = item
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
+      this.axios.post(api, { data: this.tempProduct }).then(res => {
+        console.log(res)
+        this.getProducts()
+      })
     }
   },
   created () {
