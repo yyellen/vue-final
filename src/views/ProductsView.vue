@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import ProductModal from '../components/ProductModal.vue'
+import ProductModal from '@/components/ProductModal.vue'
 
 export default {
   data () {
