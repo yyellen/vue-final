@@ -31,6 +31,7 @@
                     type="text"
                     class="form-control"
                     id="image"
+                    v-model="tempProduct.imageUrl"
                     placeholder="請輸入圖片連結"
                   />
                 </div>
@@ -48,6 +49,7 @@
                     <input
                       type="url"
                       class="form-control form-control"
+                      v-model="tempProduct.images[key]"
                       placeholder="請輸入連結"
                     />
                     <button type="button" class="btn btn-outline-danger">
@@ -70,6 +72,7 @@
                     type="text"
                     class="form-control"
                     id="title"
+                    v-model="tempProduct.title"
                     placeholder="請輸入標題"
                   />
                 </div>
@@ -81,6 +84,7 @@
                       type="text"
                       class="form-control"
                       id="category"
+                      v-model="tempProduct.category"
                       placeholder="請輸入分類"
                     />
                   </div>
@@ -90,6 +94,7 @@
                       type="text"
                       class="form-control"
                       id="unit"
+                      v-model="tempProduct.unit"
                       placeholder="請輸入單位"
                     />
                   </div>
@@ -102,6 +107,7 @@
                       type="number"
                       class="form-control"
                       id="origin_price"
+                      v-model="tempProduct.origin_price"
                       placeholder="請輸入原價"
                     />
                   </div>
@@ -111,6 +117,7 @@
                       type="number"
                       class="form-control"
                       id="price"
+                      v-model="tempProduct.price"
                       placeholder="請輸入售價"
                     />
                   </div>
@@ -123,6 +130,7 @@
                     type="text"
                     class="form-control"
                     id="description"
+                    v-model="tempProduct.description"
                     placeholder="請輸入產品描述"
                   ></textarea>
                 </div>
@@ -132,6 +140,7 @@
                     type="text"
                     class="form-control"
                     id="content"
+                    v-model="tempProduct.content"
                     placeholder="請輸入產品說明內容"
                   ></textarea>
                 </div>
@@ -140,6 +149,7 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
+                      v-model="tempProduct.is_enabled"
                       :true-value="1"
                       :false-value="0"
                       id="is_enabled"
@@ -174,7 +184,8 @@ import Modal from 'bootstrap/js/dist/modal'
 export default {
   data () {
     return {
-      modal: {}
+      modal: {},
+      tempProduct: {}
     }
   },
   methods: {
