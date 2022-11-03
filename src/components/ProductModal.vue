@@ -185,7 +185,9 @@ export default {
   data () {
     return {
       modal: {},
-      tempProduct: {}
+      tempProduct: {
+        images: ''
+      }
     }
   },
   methods: {
