@@ -34,7 +34,11 @@
       </tr>
     </tbody>
   </table>
-  <ProductModal ref="productModal" :product="tempProduct"></ProductModal>
+  <ProductModal
+    ref="productModal"
+    :product="tempProduct"
+    @update-product="updateProduct"
+  ></ProductModal>
 </template>
 
 <script>
@@ -68,6 +72,7 @@ export default {
       productComponent.showModal()
     },
     updateProduct (item) {
+      // console.log(item)
       this.tempProduct = item
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
       const productComponent = this.$refs.productModal
