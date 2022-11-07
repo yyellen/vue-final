@@ -45,7 +45,11 @@
                 <img class="img-fluid" alt="" />
                 <!-- 延伸技巧，多圖 -->
                 <div class="mt-5">
-                  <div class="mb-3 input-group">
+                  <div
+                    v-for="(image, key) in tempProduct.images"
+                    :key="key"
+                    class="mb-3 input-group"
+                  >
                     <input
                       type="url"
                       class="form-control form-control"
@@ -185,9 +189,7 @@ export default {
   data () {
     return {
       modal: {},
-      tempProduct: {
-        images: ''
-      }
+      tempProduct: {}
     }
   },
   methods: {
