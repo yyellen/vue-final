@@ -186,6 +186,20 @@
 import Modal from 'bootstrap/js/dist/modal'
 
 export default {
+  props: {
+    product: {
+      type: Object,
+      // 預設若沒有東西傳入就回傳一個空物件
+      default () {
+        return {}
+      }
+    }
+  },
+  watch: {
+    product () {
+      this.tempProduct = this.product
+    }
+  },
   data () {
     return {
       modal: {},

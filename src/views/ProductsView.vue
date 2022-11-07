@@ -34,7 +34,7 @@
       </tr>
     </tbody>
   </table>
-  <ProductModal ref="productModal"></ProductModal>
+  <ProductModal ref="productModal" :product="tempProduct"></ProductModal>
 </template>
 
 <script>
