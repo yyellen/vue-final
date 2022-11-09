@@ -47,10 +47,24 @@
                     ref="fileInput"
                     @change="uploadFile"
                   />
+                  <input
+                    type="file"
+                    id="customFile2"
+                    class="form-control"
+                    ref="files2"
+                    @change="Imgfn2"
+                  />
+                  <input
+                    type="file"
+                    id="customFile3"
+                    class="form-control"
+                    ref="files3"
+                    @change="Imgfn3"
+                  />
                 </div>
-                <img class="img-fluid" alt="" />
+                <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
                 <!-- 延伸技巧，多圖 -->
-                <div class="mt-5">
+                <div class="mt-5" v-if="tempProduct.images">
                   <div
                     v-for="(image, key) in tempProduct.images"
                     :key="key"
@@ -62,13 +76,23 @@
                       v-model="tempProduct.images[key]"
                       placeholder="請輸入連結"
                     />
-                    <button type="button" class="btn btn-outline-danger">
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      @click="tempProduct.images.splice(key, 1)"
+                    >
                       移除
                     </button>
                   </div>
-                  <div>
+                  <div
+                    v-if="
+                      tempProduct.images[tempProduct.images.length - 1] ||
+                      !tempProduct.images.length
+                    "
+                  >
                     <button
                       class="btn btn-outline-primary btn-sm d-block w-100"
+                      @click="tempProduct.images.push('')"
                     >
                       新增圖片
                     </button>
@@ -210,6 +234,10 @@ export default {
   watch: {
     product () {
       this.tempProduct = this.product
+      // 多圖範例
+      if (!this.tempProduct.images) {
+        this.tempProduct.images = []
+      }
     }
   },
   data () {
@@ -228,11 +256,45 @@ export default {
     uploadFile () {
       // 取得檔案
       const uploadedFile = this.$refs.fileInput.files[0]
-      const select = this.$refs.fileInput.id
       // console.dir(uploadedFile)
+      const select = this.$refs.fileInput.id
       // 轉成form-data格式
       const formData = new FormData()
       formData.append('file-to-upload', uploadedFile)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      this.$http.post(url, formData).then(response => {
+        console.log(response.data)
+        if (response.data.success) {
+          this.tempProduct.imageUrl = response.data.imageUrl
+          // 清空檔名
+          document.getElementById(select).value = ''
+        }
+      })
+    },
+    Imgfn2 () {
+      const Img2 = this.$refs.files2.files[0]
+      console.dir(Img2)
+      const select = this.$refs.files2.id
+      // 轉成form-data格式
+      const formData = new FormData()
+      formData.append('file-to-upload', Img2)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      this.$http.post(url, formData).then(response => {
+        console.log(response.data)
+        if (response.data.success) {
+          this.tempProduct.imageUrl = response.data.imageUrl
+          // 清空檔名
+          document.getElementById(select).value = ''
+        }
+      })
+    },
+    Imgfn3 () {
+      const Img3 = this.$refs.files3.files[0]
+      console.dir(Img3)
+      const select = this.$refs.files3.id
+      // 轉成form-data格式
+      const formData = new FormData()
+      formData.append('file-to-upload', Img3)
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http.post(url, formData).then(response => {
         console.log(response.data)
