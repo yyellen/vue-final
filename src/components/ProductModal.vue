@@ -228,6 +228,7 @@ export default {
     uploadFile () {
       // 取得檔案
       const uploadedFile = this.$refs.fileInput.files[0]
+      const select = this.$refs.fileInput.id
       // console.dir(uploadedFile)
       // 轉成form-data格式
       const formData = new FormData()
@@ -237,6 +238,8 @@ export default {
         console.log(response.data)
         if (response.data.success) {
           this.tempProduct.imageUrl = response.data.imageUrl
+          // 清空檔名
+          document.getElementById(select).value = ''
         }
       })
     }
