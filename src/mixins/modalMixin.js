@@ -1,4 +1,3 @@
-/* eslint-disable */
 import Modal from 'bootstrap/js/dist/modal'
 
 export default {
