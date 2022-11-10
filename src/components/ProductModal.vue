@@ -47,7 +47,7 @@
                     ref="fileInput"
                     @change="uploadFile"
                   />
-                  <input
+                  <!-- <input
                     type="file"
                     id="customFile2"
                     class="form-control"
@@ -60,9 +60,8 @@
                     class="form-control"
                     ref="files3"
                     @change="Imgfn3"
-                  />
+                  /> -->
                 </div>
-                <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
                 <!-- 延伸技巧，多圖 -->
                 <div class="mt-5" v-if="tempProduct.images">
                   <div
@@ -70,6 +69,7 @@
                     :key="key"
                     class="mb-3 input-group"
                   >
+                    <img class="img-fluid" :src="image" alt="" />
                     <input
                       type="url"
                       class="form-control form-control"
@@ -226,13 +226,13 @@ export default {
     product: {
       type: Object,
       // 預設若沒有東西傳入就回傳一個空物件
-      default () {
+      default() {
         return {}
       }
     }
   },
   watch: {
-    product () {
+    product() {
       this.tempProduct = this.product
       // 多圖範例
       if (!this.tempProduct.images) {
@@ -240,17 +240,17 @@ export default {
       }
     }
   },
-  data () {
+  data() {
     return {
       modal: {},
       tempProduct: {}
     }
   },
   methods: {
-    uploadFile () {
+    uploadFile() {
       // 取得檔案
       const uploadedFile = this.$refs.fileInput.files[0]
-      // console.dir(uploadedFile)
+      console.dir(uploadedFile)
       const select = this.$refs.fileInput.id
       // 轉成form-data格式
       const formData = new FormData()
@@ -259,46 +259,46 @@ export default {
       this.$http.post(url, formData).then(response => {
         console.log(response.data)
         if (response.data.success) {
-          this.tempProduct.imageUrl = response.data.imageUrl
-          // 清空檔名
-          document.getElementById(select).value = ''
-        }
-      })
-    },
-    Imgfn2 () {
-      const Img2 = this.$refs.files2.files[0]
-      console.dir(Img2)
-      const select = this.$refs.files2.id
-      // 轉成form-data格式
-      const formData = new FormData()
-      formData.append('file-to-upload', Img2)
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-      this.$http.post(url, formData).then(response => {
-        console.log(response.data)
-        if (response.data.success) {
-          this.tempProduct.imageUrl = response.data.imageUrl
-          // 清空檔名
-          document.getElementById(select).value = ''
-        }
-      })
-    },
-    Imgfn3 () {
-      const Img3 = this.$refs.files3.files[0]
-      console.dir(Img3)
-      const select = this.$refs.files3.id
-      // 轉成form-data格式
-      const formData = new FormData()
-      formData.append('file-to-upload', Img3)
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
-      this.$http.post(url, formData).then(response => {
-        console.log(response.data)
-        if (response.data.success) {
-          this.tempProduct.imageUrl = response.data.imageUrl
+          this.tempProduct.images.push(response.data.imageUrl)
           // 清空檔名
           document.getElementById(select).value = ''
         }
       })
     }
+    // Imgfn2() {
+    //   const Img2 = this.$refs.files2.files[0]
+    //   console.dir(Img2)
+    //   const select = this.$refs.files2.id
+    //   // 轉成form-data格式
+    //   const formData = new FormData()
+    //   formData.append('file-to-upload', Img2)
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+    //   this.$http.post(url, formData).then(response => {
+    //     console.log(response.data)
+    //     if (response.data.success) {
+    //       this.tempProduct.imageUrl = response.data.imageUrl
+    //       // 清空檔名
+    //       document.getElementById(select).value = ''
+    //     }
+    //   })
+    // },
+    // Imgfn3() {
+    //   const Img3 = this.$refs.files3.files[0]
+    //   console.dir(Img3)
+    //   const select = this.$refs.files3.id
+    //   // 轉成form-data格式
+    //   const formData = new FormData()
+    //   formData.append('file-to-upload', Img3)
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+    //   this.$http.post(url, formData).then(response => {
+    //     console.log(response.data)
+    //     if (response.data.success) {
+    //       this.tempProduct.imageUrl = response.data.imageUrl
+    //       // 清空檔名
+    //       document.getElementById(select).value = ''
+    //     }
+    //   })
+    // }
   },
   mixins: [modalMixin]
 }
