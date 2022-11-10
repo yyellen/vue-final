@@ -49,11 +49,11 @@
     :product="tempProduct"
     @update-product="updateProduct"
   ></ProductModal>
-  <DelModel
+  <DelModal
     ref="delModal"
     :item="tempProduct"
-    @udel-item="delProduct"
-  ></DelModel>
+    @del-item="delProduct"
+  ></DelModal>
 </template>
 
 <script>
@@ -71,7 +71,7 @@ export default {
     }
   },
   components: {
-    ProductModal
+    ProductModal,
     DelModal
   },
   methods: {
@@ -108,20 +108,20 @@ export default {
       })
     },
     // 開啟刪除 Modal
-    openDelProductModal(item) {
-      this.tempProduct = { ...item };
-      const delComponent = this.$refs.delModal;
-      delComponent.showModal();
+    openDelProductModal (item) {
+      this.tempProduct = { ...item }
+      const delComponent = this.$refs.delModal
+      delComponent.showModal()
     },
-    delProduct() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`;
-      this.$http.delete(url).then((response) => {
-        console.log(response.data);
-        const delComponent = this.$refs.delModal;
-        delComponent.hideModal();
-        this.getProducts();
-      });
-    },
+    delProduct () {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
+      this.axios.delete(url).then(response => {
+        console.log(response.data)
+        const delComponent = this.$refs.delModal
+        delComponent.hideModal()
+        this.getProducts()
+      })
+    }
   },
   created () {
     this.getProducts()
