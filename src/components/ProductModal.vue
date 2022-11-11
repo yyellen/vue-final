@@ -62,6 +62,7 @@
                     @change="Imgfn3"
                   /> -->
                 </div>
+                <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
                 <!-- 延伸技巧，多圖 -->
                 <div class="mt-5" v-if="tempProduct.images">
                   <div
