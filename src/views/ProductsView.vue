@@ -1,4 +1,5 @@
 <template>
+  <LoadingCircle :active="isLoading"></LoadingCircle>
   <div class="text-end">
     <button class="btn btn-primary" type="button" @click="openModal(true)">
       增加一個產品
@@ -61,13 +62,14 @@ import ProductModal from '@/components/ProductModal.vue'
 import DelModal from '@/components/DelModal.vue'
 
 export default {
-  data () {
+  data() {
     return {
       products: [],
       pagination: {},
       tempProduct: {},
       // 判斷是否是新增商品
-      isNew: false
+      isNew: false,
+      isLoading: false
     }
   },
   components: {
@@ -75,9 +77,11 @@ export default {
     DelModal
   },
   methods: {
-    getProducts () {
+    getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      this.isLoading = true
       this.axios.get(api).then(res => {
+        this.isLoading = false
         if (res.data.success) {
           console.log(res.data)
           this.products = res.data.products
@@ -86,7 +90,7 @@ export default {
       })
     },
     // (是否是新增產品, 要編輯的品項)
-    openModal (isNew, item) {
+    openModal(isNew, item) {
       // console.log(isNew, item)
       if (isNew) {
         this.tempProduct = {}
@@ -97,7 +101,8 @@ export default {
       const productComponent = this.$refs.productModal
       productComponent.showModal()
     },
-    updateProduct (item) {
+    updateProduct(item) {
+      this.isLoading = false
       this.tempProduct = item
       // 新增
       let api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
@@ -115,12 +120,13 @@ export default {
       })
     },
     // 開啟刪除 Modal
-    openDelProductModal (item) {
+    openDelProductModal(item) {
       this.tempProduct = { ...item }
       const delComponent = this.$refs.delModal
       delComponent.showModal()
     },
-    delProduct () {
+    delProduct() {
+      this.isLoading = false
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.tempProduct.id}`
       this.axios.delete(url).then(response => {
         console.log(response.data)
@@ -130,7 +136,7 @@ export default {
       })
     }
   },
-  created () {
+  created() {
     this.getProducts()
   }
 }
