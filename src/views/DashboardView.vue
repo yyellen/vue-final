@@ -1,18 +1,28 @@
 <template>
   <div>
     <Navbar />
-    <div class="container-fluid">
+    <div class="container-fluid mt-3 position-relative">
+      <ToastMessages />
       <router-view />
     </div>
   </div>
 </template>
 
 <script>
+import emitter from '@/methods/emitter'
+import ToastMessages from '@/components/ToastMessages.vue'
 import Navbar from '@/components/NavBar.vue'
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    ToastMessages
+  },
+  // provide讓內層元件都可以使用外層的功能，不需要重複注入
+  provide() {
+    return {
+      emitter
+    }
   },
   created() {
     const token = document.cookie.replace(
