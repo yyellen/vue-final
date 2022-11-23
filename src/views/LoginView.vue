@@ -48,7 +48,7 @@ export default {
     }
   },
   methods: {
-    signIn () {
+    signIn() {
       const api = `${process.env.VUE_APP_API}admin/signin`
       this.axios.post(api, this.user).then(res => {
         if (res.data.success) {

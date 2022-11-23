@@ -53,7 +53,7 @@ export default {
   props: {
     item: {}
   },
-  data () {
+  data() {
     return {
       modal: ''
     }

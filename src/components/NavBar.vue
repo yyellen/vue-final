@@ -36,7 +36,7 @@
 <script>
 export default {
   methods: {
-    logout () {
+    logout() {
       const api = `${process.env.VUE_APP_API}logout`
       this.axios.post(api, this.user).then(res => {
         if (res.data.success) {

@@ -14,7 +14,7 @@ export default {
   components: {
     Navbar
   },
-  created () {
+  created() {
     const token = document.cookie.replace(
       /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
       '$1'
