@@ -45,6 +45,7 @@
       </tr>
     </tbody>
   </table>
+  <Pagination :pages="pagination" @emit-page="getProducts" :prepage="prepage" @emit-prepage="getProducts" :nextpage="nextpage" @emit-nextpage="getProducts"></Pagination>
   <ProductModal
     ref="productModal"
     :product="tempProduct"
@@ -60,6 +61,7 @@
 <script>
 import ProductModal from '@/components/ProductModal.vue'
 import DelModal from '@/components/DelModal.vue'
+import Pagination from '@/components/Pagination.vue'
 
 export default {
   data() {
@@ -74,12 +76,13 @@ export default {
   },
   components: {
     ProductModal,
-    DelModal
+    DelModal,
+    Pagination
   },
   inject: ['emitter'],
   methods: {
-    getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+    getProducts(page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
       this.isLoading = true
       this.axios.get(api).then(res => {
         this.isLoading = false
@@ -87,6 +90,8 @@ export default {
           console.log(res.data)
           this.products = res.data.products
           this.pagination = res.data.pagination
+          this.prepage = (res.data.pagination.current_page) - 1
+          this.nextpage = (res.data.pagination.current_page) + 1
         }
       })
     },
