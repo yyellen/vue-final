@@ -40,6 +40,21 @@ const routes = [
         component: () => import('../views/CouponsView.vue')
       }
     ]
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import('../views/UserboardView.vue'),
+    children: [
+      {
+        path: 'cart',
+        component: () => import('../views/UserCart.vue')
+      },
+      {
+        path: 'product/:productId',
+        component: () => import('../views/UserProduct.vue')
+      }
+    ]
   }
 ]
 
