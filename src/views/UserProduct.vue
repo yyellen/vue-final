@@ -53,7 +53,7 @@ export default {
     getProduct() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`
       this.isLoading = true
-      this.$http.get(api).then(response => {
+      this.axios.get(api).then(response => {
         console.log(response.data)
         this.isLoading = false
         if (response.data.success) {
@@ -68,7 +68,7 @@ export default {
         qty
       }
       this.isLoading = true
-      this.$http.post(url, { data: cart }).then(response => {
+      this.axios.post(url, { data: cart }).then(response => {
         this.isLoading = false
         this.$httpMessageState(response, '加入購物車')
         this.$router.push('/user/cart')

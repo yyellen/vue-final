@@ -25,7 +25,7 @@
                 ></div>
               </td>
               <td>
-                <a href="#" class="text-dark">{{ item.title }}</a>
+                <p class="text-dark">{{ item.title }}</p>
               </td>
               <td>
                 <div class="h5" v-if="!item.price">
@@ -47,7 +47,19 @@
                   >
                     查看更多
                   </button>
-                  <button type="button" class="btn btn-outline-danger">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    :disabled="this.status.loadingItem === item.id"
+                    @click="addCart(item.id)"
+                  >
+                    <div
+                      v-if="this.status.loadingItem === item.id"
+                      class="spinner-grow text-danger spinner-grow-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
                     加到購物車
                   </button>
                 </div>
@@ -68,7 +80,7 @@ export default {
       products: [],
       product: {},
       status: {
-        loadingItem: ''
+        loadingItem: '' // 對應品項id
       }
     }
   },
@@ -76,7 +88,7 @@ export default {
     getProducts() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.isLoading = true
-      this.$http.get(url).then(response => {
+      this.axios.get(url).then(response => {
         this.products = response.data.products
         console.log('products:', response)
         this.isLoading = false
@@ -84,6 +96,18 @@ export default {
     },
     getProduct(id) {
       this.$router.push(`/user/product/${id}`)
+    },
+    addCart(id) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      this.status.loadingItem = id
+      const cart = {
+        product_id: id,
+        qty: 1
+      }
+      this.axios.post(url, { data: cart }).then(res => {
+        this.status.loadingItem = ''
+        console.log(res)
+      })
     }
   },
   created() {
