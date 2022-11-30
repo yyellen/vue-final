@@ -45,7 +45,7 @@
       </tr>
     </tbody>
   </table>
-  <Pagination :pages="pagination" @emit-page="getProducts" :prepage="prepage" @emit-prepage="getProducts" :nextpage="nextpage" @emit-nextpage="getProducts"></Pagination>
+  <Pagination :pages="pagination" @emit-page="getProducts"></Pagination>
   <ProductModal
     ref="productModal"
     :product="tempProduct"
@@ -90,8 +90,6 @@ export default {
           console.log(res.data)
           this.products = res.data.products
           this.pagination = res.data.pagination
-          this.prepage = (res.data.pagination.current_page) - 1
-          this.nextpage = (res.data.pagination.current_page) + 1
         }
       })
     },
