@@ -31,7 +31,7 @@
         <hr />
         <button
           type="button"
-          class="btn btn-outline-danger"
+          class="btn btn-outline-primary"
           @click="addToCart(product.id)"
         >
           加到購物車

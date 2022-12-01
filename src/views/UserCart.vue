@@ -49,18 +49,19 @@
                   </button>
                   <button
                     type="button"
-                    class="btn btn-outline-danger"
+                    class="btn btn-outline-primary"
                     :disabled="this.status.loadingItem === item.id"
                     @click="addCart(item.id)"
+                    style="width: 90px"
                   >
                     <div
                       v-if="this.status.loadingItem === item.id"
-                      class="spinner-grow text-danger spinner-grow-sm"
+                      class="spinner-grow text-primary spinner-grow-sm"
                       role="status"
                     >
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    加到購物車
+                    <div v-else>加到購物車</div>
                   </button>
                 </div>
               </td>
