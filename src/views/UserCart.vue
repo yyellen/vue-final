@@ -91,7 +91,7 @@
                       :disabled="status.loadingItem === item.id"
                       @click="removeCartItem(item.id)"
                     >
-                      刪除
+                      <i class="bi bi-trash-fill"></i>
                     </button>
                   </td>
                   <td>

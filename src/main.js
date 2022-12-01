@@ -7,6 +7,7 @@ import Loading from 'vue3-loading-overlay'
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css'
 import { currency, date } from './methods/filters'
 import $httpMessageState from './methods/pushMessageState'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const app = createApp(App)
 // 自定義的屬性名稱前方加上$，避免和區域元件內的變數產生衝突
