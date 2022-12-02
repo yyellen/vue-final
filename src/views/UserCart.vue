@@ -208,21 +208,21 @@ export default {
         this.cart = response.data.data
         this.isLoading = false
       })
+    },
+    updateCart(item) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+      this.isLoading = true
+      this.status.loadingItem = item.id
+      const cart = {
+        product_id: item.product_id,
+        qty: item.qty
+      }
+      this.axios.put(url, { data: cart }).then(response => {
+        console.log(response)
+        this.status.loadingItem = ''
+        this.getCart()
+      })
     }
-  },
-  updateCart(item) {
-    const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
-    this.isLoading = true
-    this.status.loadingItem = item.id
-    const cart = {
-      product_id: item.product_id,
-      qty: item.qty
-    }
-    this.axios.put(url, { data: cart }).then(response => {
-      console.log(response)
-      this.status.loadingItem = ''
-      this.getCart()
-    })
   },
   created() {
     this.getProducts()
