@@ -83,7 +83,13 @@
             </thead>
             <tbody>
               <template v-if="cart.carts">
-                <tr v-for="item in cart.carts" :key="item.id">
+                <tr
+                  v-for="item in cart.carts"
+                  :key="item.id"
+                  :class="{
+                    'bg-gray': !products.includes(item.product_id)
+                  }"
+                >
                   <td>
                     <button
                       type="button"
@@ -230,3 +236,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bg-gray {
+  background: #d3d3d3;
+}
+</style>
