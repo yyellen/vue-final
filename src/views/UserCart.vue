@@ -205,6 +205,7 @@ export default {
       this.axios.post(url, { data: cart }).then(res => {
         this.status.loadingItem = ''
         // console.log(res)
+        this.getCart()
       })
     },
     getCart() {
