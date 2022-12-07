@@ -2,7 +2,6 @@ import emitter from '@/methods/emitter'
 
 export default function (response, title = '更新') {
   if (response.data.success) {
-    this.getProducts() // 更新成功，重新渲染畫面
     emitter.emit('push-message', {
       style: 'success',
       title: `${title}成功`

@@ -121,19 +121,7 @@ export default {
         console.log(res)
         productComponent.hideModal()
         this.$httpMessageState(res, '更新')
-        // if (res.data.success) {
-        //   this.getProducts()
-        //   this.emitter.emit('push-message', {
-        //     style: 'success',
-        //     title: '更新成功'
-        //   })
-        // } else {
-        //   this.emitter.emit('push-message', {
-        //     style: 'danger',
-        //     title: '更新失敗',
-        //     content: res.data.message.join('、')
-        //   })
-        // }
+        this.getProducts()
       })
     },
     // 開啟刪除 Modal
