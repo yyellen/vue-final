@@ -196,15 +196,15 @@ export default {
       this.$router.push(`/user/product/${id}`)
     },
     addCart(id) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.status.loadingItem = id
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       const cart = {
         product_id: id,
         qty: 1
       }
-      this.axios.post(url, { data: cart }).then(res => {
+      this.axios.post(url, { data: cart }).then(response => {
         this.status.loadingItem = ''
-        // console.log(res)
+        this.$httpMessageState(response, '加入購物車')
         this.getCart()
       })
     },
@@ -212,7 +212,6 @@ export default {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.isLoading = true
       this.axios.get(url).then(response => {
-        // console.log(response)
         this.cart = response.data.data
         this.isLoading = false
       })
@@ -231,6 +230,17 @@ export default {
         this.getCart()
       })
     },
+    removeCartItem(id) {
+      this.status.loadingItem = id
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
+      this.isLoading = true
+      this.axios.delete(url).then(response => {
+        this.$httpMessageState(response, '移除購物車品項')
+        this.status.loadingItem = ''
+        this.getCart()
+        this.isLoading = false
+      })
+    },
     addCouponCode() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
       const coupon = {
@@ -238,7 +248,7 @@ export default {
       }
       this.isLoading = true
       this.axios.post(url, { data: coupon }).then(response => {
-        console.log(response, '加入優惠券')
+        this.$httpMessageState(response, '套用優惠券')
         this.getCart()
         this.isLoading = false
       })
