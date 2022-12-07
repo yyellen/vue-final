@@ -87,7 +87,7 @@
                   v-for="item in cart.carts"
                   :key="item.id"
                   :class="{
-                    'bg-gray': !products.includes(item.product_id)
+                    'bg-gray': !stock.includes(item.product_id)
                   }"
                 >
                   <td>
@@ -188,6 +188,7 @@ export default {
       this.axios.get(url).then(response => {
         this.products = response.data.products
         // console.log('products:', response)
+        this.stock = this.products.map(item => item.id)
         this.isLoading = false
       })
     },
