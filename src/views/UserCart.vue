@@ -229,6 +229,18 @@ export default {
         this.status.loadingItem = ''
         this.getCart()
       })
+    },
+    addCouponCode() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
+      const coupon = {
+        code: this.coupon_code
+      }
+      this.isLoading = true
+      this.axios.post(url, { data: coupon }).then(response => {
+        console.log(response, '加入優惠券')
+        this.getCart()
+        this.isLoading = false
+      })
     }
   },
   created() {

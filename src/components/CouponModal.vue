@@ -53,6 +53,7 @@
             <label for="price">折扣百分比</label>
             <input
               type="number"
+              min="0"
               class="form-control"
               id="price"
               v-model.number="tempCoupon.percent"
