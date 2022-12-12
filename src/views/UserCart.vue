@@ -266,6 +266,7 @@ export default {
         message: ''
       },
       cart: {},
+      stock: [],
       coupon_code: ''
     }
   },
@@ -341,8 +342,11 @@ export default {
     createOrder() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`
       const order = this.form
-      this.$http.post(url, { data: order }).then(res => {
+      this.axios.post(url, { data: order }).then(res => {
         console.log(res)
+        // console.log(res.data.orderId)
+        const orderId = res.data.orderId
+        this.$router.push(`/user/checkout/${orderId}`)
       })
     },
     isPhone(value) {

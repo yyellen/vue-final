@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <LoadingCircle :active="isLoading"></LoadingCircle>
   <table class="table mt-4">
     <thead>
       <tr>

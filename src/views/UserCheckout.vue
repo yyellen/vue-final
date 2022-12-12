@@ -1,5 +1,5 @@
 <template>
-  <Loading :active="isLoading"></Loading>
+  <LoadingCircle :active="isLoading"></LoadingCircle>
   <div class="my-5 row justify-content-center">
     <form class="col-md-6" @submit.prevent="payOrder">
       <table class="table align-middle">
@@ -69,9 +69,30 @@ export default {
     }
   },
   methods: {
-    getOrder() {},
-    payOrder() {}
+    getOrder() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.orderId}`
+      this.axios.get(url).then(res => {
+        // console.log(res)
+        if (res.data.success) {
+          this.order = res.data.order
+          console.log(this.order)
+        }
+      })
+    },
+    payOrder() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`
+      this.axios.post(url).then(res => {
+        // console.log(res)
+        if (res.data.success) {
+          this.getOrder()
+        }
+      })
+    }
   },
-  created() {}
+  created() {
+    this.orderId = this.$route.params.orderId
+    console.log(this.orderId)
+    this.getOrder()
+  }
 }
 </script>
