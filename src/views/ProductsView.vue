@@ -117,11 +117,10 @@ export default {
         httpMethod = 'put'
       }
       const productComponent = this.$refs.productModal
-      this.axios[httpMethod](api, { data: this.tempProduct }).then(res => {
-        console.log(res)
+      this.axios[httpMethod](api, { data: this.tempProduct }).then(response => {
+        console.log(response)
         productComponent.hideModal()
-        this.$httpMessageState(res, '更新')
-        this.getProducts()
+        if (this.$httpMessageState(response, '更新')) this.getProducts()
       })
     },
     // 開啟刪除 Modal

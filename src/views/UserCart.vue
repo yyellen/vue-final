@@ -292,8 +292,7 @@ export default {
       }
       this.axios.post(url, { data: cart }).then(response => {
         this.status.loadingItem = ''
-        this.$httpMessageState(response, '加入購物車')
-        this.getCart()
+        if (this.$httpMessageState(response, '加入購物車')) this.getCart()
       })
     },
     getCart() {
@@ -323,9 +322,8 @@ export default {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
       this.isLoading = true
       this.axios.delete(url).then(response => {
-        this.$httpMessageState(response, '移除購物車品項')
+        if (this.$httpMessageState(response, '移除購物車品項')) this.getCart()
         this.status.loadingItem = ''
-        this.getCart()
         this.isLoading = false
       })
     },
@@ -336,8 +334,7 @@ export default {
       }
       this.isLoading = true
       this.axios.post(url, { data: coupon }).then(response => {
-        this.$httpMessageState(response, '套用優惠券')
-        this.getCart()
+        if (this.$httpMessageState(response, '套用優惠券')) this.getCart()
         this.isLoading = false
       })
     },

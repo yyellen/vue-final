@@ -18,4 +18,5 @@ export default function (response, title = '更新') {
       content: message.join('、')
     })
   }
+  return response.data.success
 }

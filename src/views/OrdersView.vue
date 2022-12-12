@@ -120,8 +120,9 @@ export default {
       }
       this.$http.put(api, { data: paid }).then(response => {
         this.isLoading = false
-        this.getOrders(this.currentPage)
-        this.$httpMessageState(response, '更新付款狀態')
+        if (this.$httpMessageState(response, '更新付款狀態')) {
+          this.getOrders(this.currentPage)
+        }
       })
     },
     delOrder() {

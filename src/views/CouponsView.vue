@@ -105,16 +105,14 @@ export default {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`
         this.$http.post(url, { data: tempCoupon }).then(response => {
           console.log(response, tempCoupon)
-          this.$httpMessageState(response, '新增優惠券')
-          this.getCoupons()
+          if (this.$httpMessageState(response, '新增優惠券')) this.getCoupons()
           this.$refs.couponModal.hideModal()
         })
       } else {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
         this.$http.put(url, { data: this.tempCoupon }).then(response => {
           console.log(response)
-          this.$httpMessageState(response, '新增優惠券')
-          this.getCoupons()
+          if (this.$httpMessageState(response, '更新優惠券')) this.getCoupons()
           this.$refs.couponModal.hideModal()
         })
       }
@@ -124,10 +122,9 @@ export default {
       this.isLoading = true
       this.$http.delete(url).then(response => {
         console.log(response, this.tempCoupon)
-        this.$httpMessageState(response, '刪除優惠券')
+        if (this.$httpMessageState(response, '刪除優惠券')) this.getCoupons()
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
-        this.getCoupons()
       })
     }
   },

@@ -69,9 +69,10 @@ export default {
       }
       this.isLoading = true
       this.axios.post(url, { data: cart }).then(response => {
+        if (this.$httpMessageState(response, '加入購物車')) {
+          this.$router.push('/user/cart')
+        }
         this.isLoading = false
-        this.$httpMessageState(response, '加入購物車')
-        this.$router.push('/user/cart')
       })
     }
   },
