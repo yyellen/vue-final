@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
@@ -33,6 +34,9 @@ configure({
 setLocale('zh_TW')
 
 const app = createApp(App)
+
+const pinia = createPinia()
+
 // 自定義的屬性名稱前方加上$，避免和區域元件內的變數產生衝突
 app.config.globalProperties.$filters = {
   currency,
@@ -41,6 +45,7 @@ app.config.globalProperties.$filters = {
 // 此函式的用途是整合 Ajax 的錯誤事件，統一整理發送給予 Toast 處理
 app.config.globalProperties.$httpMessageState = $httpMessageState
 
+app.use(pinia)
 app.use(VueAxios, axios)
 app.use(router)
 app.component('LoadingCircle', Loading)
