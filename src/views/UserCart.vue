@@ -248,10 +248,12 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'pinia'
+import productStore from '@/stores/productStore'
+
 export default {
   data() {
     return {
-      products: [],
       product: {},
       status: {
         loadingItem: '' // 對應品項id
@@ -270,17 +272,11 @@ export default {
       coupon_code: ''
     }
   },
+  computed: {
+    ...mapState(productStore, ['products'])
+  },
   methods: {
-    getProducts() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
-      this.isLoading = true
-      this.axios.get(url).then(response => {
-        this.products = response.data.products
-        // console.log('products:', response)
-        this.stock = this.products.map(item => item.id)
-        this.isLoading = false
-      })
-    },
+    ...mapActions(productStore, ['getProducts']),
     getProduct(id) {
       this.$router.push(`/user/product/${id}`)
     },
