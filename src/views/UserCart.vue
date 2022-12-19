@@ -13,7 +13,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in products" :key="item.id">
+            <tr v-for="item in sortProducts" :key="item.id">
               <td style="width: 200px">
                 <div
                   style="
@@ -274,7 +274,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(productStore, ['products']),
+    ...mapState(productStore, ['sortProducts']),
     ...mapState(statusStore, ['isLoading'])
   },
   methods: {

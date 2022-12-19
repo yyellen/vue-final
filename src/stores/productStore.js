@@ -10,6 +10,9 @@ export default defineStore('productStore', {
       products: []
     }
   },
+  getters: {
+    sortProducts: state => state.products.sort((a, b) => a.price - b.price)
+  },
   actions: {
     // this
     getProducts() {
