@@ -250,6 +250,7 @@
 <script>
 import { mapState, mapActions } from 'pinia'
 import productStore from '@/stores/productStore'
+import statusStore from '@/stores/statusStore'
 
 export default {
   data() {
@@ -273,7 +274,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(productStore, ['products'])
+    ...mapState(productStore, ['products']),
+    ...mapState(statusStore, ['isLoading'])
   },
   methods: {
     ...mapActions(productStore, ['getProducts']),
