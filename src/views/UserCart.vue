@@ -51,7 +51,7 @@
                     type="button"
                     class="btn btn-outline-primary"
                     :disabled="this.status.loadingItem === item.id"
-                    @click="addCart(item.id)"
+                    @click="addToCart(item.id)"
                     style="width: 90px"
                   >
                     <div
@@ -250,6 +250,7 @@
 <script>
 import { mapState, mapActions } from 'pinia'
 import productStore from '@/stores/productStore'
+import cartStore from '@/stores/cartStore'
 import statusStore from '@/stores/statusStore'
 
 export default {
@@ -268,64 +269,71 @@ export default {
         },
         message: ''
       },
-      cart: {},
+      // cart: {},
       stock: [],
       coupon_code: ''
     }
   },
   computed: {
     ...mapState(productStore, ['sortProducts']),
+    ...mapState(cartStore, ['cart']),
     ...mapState(statusStore, ['isLoading'])
   },
   methods: {
     ...mapActions(productStore, ['getProducts']),
+    ...mapActions(cartStore, [
+      'addToCart',
+      'getCart',
+      'updateCart',
+      'removeCartItem'
+    ]),
     getProduct(id) {
       this.$router.push(`/user/product/${id}`)
     },
-    addCart(id) {
-      this.status.loadingItem = id
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      const cart = {
-        product_id: id,
-        qty: 1
-      }
-      this.axios.post(url, { data: cart }).then(response => {
-        this.status.loadingItem = ''
-        if (this.$httpMessageState(response, '加入購物車')) this.getCart()
-      })
-    },
-    getCart() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-      this.isLoading = true
-      this.axios.get(url).then(response => {
-        this.cart = response.data.data
-        this.isLoading = false
-      })
-    },
-    updateCart(item) {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
-      this.isLoading = true
-      this.status.loadingItem = item.id
-      const cart = {
-        product_id: item.product_id,
-        qty: item.qty
-      }
-      this.axios.put(url, { data: cart }).then(response => {
-        console.log(response)
-        this.status.loadingItem = ''
-        this.getCart()
-      })
-    },
-    removeCartItem(id) {
-      this.status.loadingItem = id
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-      this.isLoading = true
-      this.axios.delete(url).then(response => {
-        if (this.$httpMessageState(response, '移除購物車品項')) this.getCart()
-        this.status.loadingItem = ''
-        this.isLoading = false
-      })
-    },
+    // addToCart(id) {
+    //   this.status.loadingItem = id
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+    //   const cart = {
+    //     product_id: id,
+    //     qty: 1
+    //   }
+    //   this.axios.post(url, { data: cart }).then(response => {
+    //     this.status.loadingItem = ''
+    //     if (this.$httpMessageState(response, '加入購物車')) this.getCart()
+    //   })
+    // },
+    // getCart() {
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+    //   this.isLoading = true
+    //   this.axios.get(url).then(response => {
+    //     this.cart = response.data.data
+    //     this.isLoading = false
+    //   })
+    // },
+    // updateCart(item) {
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
+    //   this.isLoading = true
+    //   this.status.loadingItem = item.id
+    //   const cart = {
+    //     product_id: item.product_id,
+    //     qty: item.qty
+    //   }
+    //   this.axios.put(url, { data: cart }).then(response => {
+    //     console.log(response)
+    //     this.status.loadingItem = ''
+    //     this.getCart()
+    //   })
+    // },
+    // removeCartItem(id) {
+    //   this.status.loadingItem = id
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
+    //   this.isLoading = true
+    //   this.axios.delete(url).then(response => {
+    //     if (this.$httpMessageState(response, '移除購物車品項')) this.getCart()
+    //     this.status.loadingItem = ''
+    //     this.isLoading = false
+    //   })
+    // },
     addCouponCode() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
       const coupon = {
