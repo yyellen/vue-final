@@ -50,12 +50,12 @@
                   <button
                     type="button"
                     class="btn btn-outline-primary"
-                    :disabled="this.status.loadingItem === item.id"
+                    :disabled="this.cartLoadingItem === item.id"
                     @click="addToCart(item.id)"
                     style="width: 90px"
                   >
                     <div
-                      v-if="this.status.loadingItem === item.id"
+                      v-if="this.cartLoadingItem === item.id"
                       class="spinner-grow text-primary spinner-grow-sm"
                       role="status"
                     >
@@ -94,7 +94,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-danger btn-sm"
-                      :disabled="status.loadingItem === item.id"
+                      :disabled="cartLoadingItem === item.id"
                       @click="removeCartItem(item.id)"
                     >
                       <i class="bi bi-trash-fill"></i>
@@ -112,7 +112,7 @@
                         type="number"
                         class="form-control"
                         min="1"
-                        :disabled="item.id === status.loadingItem"
+                        :disabled="item.id === cartLoadingItem"
                         @change="updateCart(item)"
                         v-model.number="item.qty"
                       />
@@ -257,9 +257,6 @@ export default {
   data() {
     return {
       product: {},
-      status: {
-        loadingItem: '' // 對應品項id
-      },
       form: {
         user: {
           name: '',
@@ -269,7 +266,6 @@ export default {
         },
         message: ''
       },
-      // cart: {},
       stock: [],
       coupon_code: ''
     }
@@ -277,7 +273,7 @@ export default {
   computed: {
     ...mapState(productStore, ['sortProducts']),
     ...mapState(cartStore, ['cart']),
-    ...mapState(statusStore, ['isLoading'])
+    ...mapState(statusStore, ['isLoading', 'cartLoadingItem'])
   },
   methods: {
     ...mapActions(productStore, ['getProducts']),
@@ -290,50 +286,6 @@ export default {
     getProduct(id) {
       this.$router.push(`/user/product/${id}`)
     },
-    // addToCart(id) {
-    //   this.status.loadingItem = id
-    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-    //   const cart = {
-    //     product_id: id,
-    //     qty: 1
-    //   }
-    //   this.axios.post(url, { data: cart }).then(response => {
-    //     this.status.loadingItem = ''
-    //     if (this.$httpMessageState(response, '加入購物車')) this.getCart()
-    //   })
-    // },
-    // getCart() {
-    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
-    //   this.isLoading = true
-    //   this.axios.get(url).then(response => {
-    //     this.cart = response.data.data
-    //     this.isLoading = false
-    //   })
-    // },
-    // updateCart(item) {
-    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
-    //   this.isLoading = true
-    //   this.status.loadingItem = item.id
-    //   const cart = {
-    //     product_id: item.product_id,
-    //     qty: item.qty
-    //   }
-    //   this.axios.put(url, { data: cart }).then(response => {
-    //     console.log(response)
-    //     this.status.loadingItem = ''
-    //     this.getCart()
-    //   })
-    // },
-    // removeCartItem(id) {
-    //   this.status.loadingItem = id
-    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`
-    //   this.isLoading = true
-    //   this.axios.delete(url).then(response => {
-    //     if (this.$httpMessageState(response, '移除購物車品項')) this.getCart()
-    //     this.status.loadingItem = ''
-    //     this.isLoading = false
-    //   })
-    // },
     addCouponCode() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
       const coupon = {
