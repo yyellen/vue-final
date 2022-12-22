@@ -22,6 +22,7 @@ export default defineStore('cartStore', {
       axios.post(url, { data: cart }).then(response => {
         status.cartLoadingItem = ''
         // if (this.$httpMessageState(response, '加入購物車')) this.getCart()
+        status.pushMessage({ title: '加入購物車' })
         this.getCart()
       })
     },
@@ -54,6 +55,7 @@ export default defineStore('cartStore', {
       status.isLoading = true
       axios.delete(url).then(response => {
         // if (this.$httpMessageState(response, '移除購物車品項')) this.getCart()
+        status.pushMessage({ title: '移除購物車品項', style: 'danger' })
         this.getCart()
         status.cartLoadingItem = ''
         status.isLoading = false

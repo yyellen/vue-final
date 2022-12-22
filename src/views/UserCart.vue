@@ -293,7 +293,8 @@ export default {
       }
       this.isLoading = true
       this.axios.post(url, { data: coupon }).then(response => {
-        if (this.$httpMessageState(response, '套用優惠券')) this.getCart()
+        // if (this.$httpMessageState(response, '套用優惠券')) this.getCart()
+        this.getCart()
         this.isLoading = false
       })
     },

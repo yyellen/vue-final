@@ -56,6 +56,7 @@
 <script>
 import CouponModal from '@/components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
+
 export default {
   components: { CouponModal, DelModal },
   props: {
@@ -105,14 +106,16 @@ export default {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`
         this.$http.post(url, { data: tempCoupon }).then(response => {
           console.log(response, tempCoupon)
-          if (this.$httpMessageState(response, '新增優惠券')) this.getCoupons()
+          // if (this.$httpMessageState(response, '新增優惠券')) this.getCoupons()
+          this.getCoupons()
           this.$refs.couponModal.hideModal()
         })
       } else {
         const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
         this.$http.put(url, { data: this.tempCoupon }).then(response => {
           console.log(response)
-          if (this.$httpMessageState(response, '更新優惠券')) this.getCoupons()
+          // if (this.$httpMessageState(response, '更新優惠券')) this.getCoupons()
+          this.getCoupons()
           this.$refs.couponModal.hideModal()
         })
       }
@@ -122,7 +125,8 @@ export default {
       this.isLoading = true
       this.$http.delete(url).then(response => {
         console.log(response, this.tempCoupon)
-        if (this.$httpMessageState(response, '刪除優惠券')) this.getCoupons()
+        // if (this.$httpMessageState(response, '刪除優惠券')) this.getCoupons()
+        this.getCoupons()
         const delComponent = this.$refs.delModal
         delComponent.hideModal()
       })
