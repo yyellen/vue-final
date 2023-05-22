@@ -22,3 +22,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Test Account
+vuefinal@test.com  
+test001  
+
+-NJ3xL3AsbVjmclpKkvU  
